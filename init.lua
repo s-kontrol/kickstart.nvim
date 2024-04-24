@@ -169,6 +169,11 @@ end, { desc = 'Page Up' })
 vim.keymap.set('n', '<PageDown>', function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-d>', true, true, true), 'n', true)
 end, { desc = 'Page Down' })
+
+vim.keymap.set('i', '<C-M>', function()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-y>', true, true, true), 'i', true)
+end, { desc = 'accept' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
