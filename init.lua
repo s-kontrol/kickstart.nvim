@@ -161,18 +161,9 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
--- my custom settings
-vim.keymap.set('n', '<PageUp>', function()
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-u>', true, true, true), 'n', true)
-end, { desc = 'Page Up' })
-
-vim.keymap.set('n', '<PageDown>', function()
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-d>', true, true, true), 'n', true)
-end, { desc = 'Page Down' })
-
-vim.keymap.set('i', '<C-M>', function()
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-y>', true, true, true), 'i', true)
-end, { desc = 'accept' })
+--vim.keymap.set('i', '<C-M>', function()
+--  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-y>', true, true, true), 'i', true)
+--end, { desc = 'accept' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -832,4 +823,21 @@ require('lazy').setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+
+-- my custom settings
+-- all *.yml files are ansible.
 vim.cmd 'autocmd BufRead,BufNewFile *.yml set filetype=yaml.ansible'
+vim.keymap.set('n', '<PageUp>', function()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-u>', true, true, true), 'n', true)
+end, { desc = 'Page Up' })
+
+vim.keymap.set('n', '<PageDown>', function()
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-d>', true, true, true), 'n', true)
+end, { desc = 'Page Down' })
+
+-- Map Ctrl+S to save the current file in insert mode and normal mode
+vim.api.nvim_set_keymap('i', '<C-s>', '<Esc>:w<CR>a', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-s>', '<Esc>:w<CR>', { noremap = true, silent = true })
+--vim.fn.expand('%')
+vim.api.nvim_set_keymap('n', '<F1>', ":lua vim.cmd('!ansible-vault decrypt ' .. vim.fn.expand('%'))<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<F2>', ":lua vim.cmd('!ansible-vault encrypt ' .. vim.fn.expand('%'))<CR>", { noremap = true, silent = true })
