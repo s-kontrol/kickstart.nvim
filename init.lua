@@ -730,7 +730,7 @@ require('lazy').setup {
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- Load the colorscheme here
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'default'
 
       -- You can configure highlights by doing something like
       vim.cmd.hi 'Comment gui=none'
@@ -827,6 +827,15 @@ require('lazy').setup {
 -- my custom settings
 -- all *.yml files are ansible.
 vim.cmd 'autocmd BufRead,BufNewFile *.yml set filetype=yaml.ansible'
+
+require('lspconfig').terraformls.setup {}
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+  pattern = { '*.tf', '*.tfvars' },
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})
+
 vim.keymap.set('n', '<PageUp>', function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-u>', true, true, true), 'n', true)
 end, { desc = 'Page Up' })
